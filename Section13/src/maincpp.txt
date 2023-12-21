@@ -1,0 +1,81 @@
+#include <iostream>
+#include "Account.h"
+
+using std::cin;
+using std::cout;
+using std::endl;
+using std::string;
+
+// class Player{
+//     string name;
+//     int health;
+//     int xp;
+
+//     public:
+//     void talk(string msg) {
+//         cout << name << " says " << msg << endl;
+//     }
+//     bool is_dead() {
+//         return health == 0;
+//     }
+//     void setEnemyName(string nameTOBeEntered) {
+//         name = nameTOBeEntered;
+//     }
+//     void setEnemyHealth(int healthToBeEntered) {
+//         health = healthToBeEntered;
+//     }
+//     void setEnemyXP(int xpToBeEntered) {
+//         xp = xpToBeEntered;
+//     }
+
+// };
+
+
+void Account::depositAmount(double amount) {
+    setBalance(getBalance() + amount);
+    cout << "Deposited " << amount << endl;
+}
+
+void Account::withdrawAmount(double amount) {
+    if(getBalance() - amount >=0){
+        setBalance(getBalance() - amount);
+        cout << "Amount withdrawn: " << amount << endl;
+    } else{
+        cout << "Insufficient balance";
+    }
+}
+
+void Account::setBalance(double amount) {
+    balance = amount;
+}
+
+double Account::getBalance() {
+    return balance;
+}
+
+void Account::setName(string name) {
+    this->name = name;
+}
+
+string Account::getName() {
+    return name;
+}
+Account::Account() {
+    cout << "Account created" << endl;
+    name = "Anonymous";
+    balance = 0.0;
+}
+
+Account::~Account() {
+    cout << "Account destroyed" << endl;
+}
+
+int main() {
+    Account account;
+    account.setName("John");
+    account.setBalance(1000.0);
+    account.depositAmount(500.0);
+    account.withdrawAmount(1000.0);
+    cout << account.getName() << " has a balance of " << account.getBalance() << endl;
+    return 0;
+}

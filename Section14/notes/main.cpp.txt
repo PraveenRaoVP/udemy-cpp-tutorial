@@ -1,0 +1,35 @@
+#include <iostream>
+#include "MyString.h"
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+
+int main() {
+    // MyString a {"Hello"};
+    // MyString b;
+    // b = a;
+    // b = "This is a test";
+    // b.display();
+    // a.display();
+    // b+= " and more";
+    // b.display();
+    // MyString c { a };
+    // c += b;
+    // c.display();
+
+    MyString larry {"Larry"};
+    MyString moe {"Moe"};
+
+    MyString stooge = larry;
+    larry.display();
+    larry = -larry;
+    larry.display();
+
+    larry += moe;
+    larry.display();
+    cout << (larry == moe) << endl;
+    cout << (larry == stooge ) << endl;
+    return 0;
+}
