@@ -19,9 +19,9 @@ class MyString {
         MyString(const MyString &source);
 
         // Copy assignment
-        MyString &operator=(const MyString &rhs);
+        MyString &operator=(const MyString &rhs); // copy assignment
         MyString &operator-() const; // lowercase
-        MyString &operator+(const MyString &rhs) const; // concatenate
+        MyString &operator+(const MyString &rhs); // concatenate
         bool operator==(const MyString &rhs) const; // equals
         bool operator>(const MyString &rhs) const; // greater than
         bool operator<(const MyString &rhs) const; // less than

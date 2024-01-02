@@ -1,0 +1,72 @@
+#include <iostream>
+#include <memory>
+#include <vector>
+
+using std::cout;
+using std::cin;
+using std::string;
+using std::endl;
+using std::unique_ptr;
+
+int main() {
+    cout << "Unique Pointer" << endl;
+    // unique_ptr<int> p1 {new int {100}};
+    // unique_ptr<int> p2 {new int {1000}};
+    unique_ptr<int> p1 = std::make_unique<int>(100);
+    unique_ptr<int> p2 = std::make_unique<int>(300);
+    cout << *p1 << endl;
+    *p1 = 200;
+    std::vector<unique_ptr<int>> vec;
+    vec.push_back(std::move(p1)); // cant copy or assign unique_ptr, but we can move it
+    vec.push_back(std::move(p2));
+    for(const auto &p: vec) {
+        cout << *p << endl; 
+    }
+    cout << "-------------------------" << endl;
+    cout << "Shared Pointer" << endl;
+
+    std::shared_ptr<int> p3 {new int {100}};
+    cout << "p3: " << *p3 << endl;
+    cout << "p3 use count: " << p3.use_count() << endl;
+    std::shared_ptr<int> p4 {p3}; // copy constructor
+    cout << "p3 use count: " << p3.use_count() << endl;
+    cout << "p4 use count: " << p4.use_count() << endl;
+    // p3.reset();
+    // cout << "p3 use count: " << p3.use_count() << endl;
+    // cout << "p4 use count: " << p4.use_count() << endl;
+
+    std::vector<std::shared_ptr<int>> vec2;
+    vec2.push_back(p3); // copy and assignment is allowed in shared_ptr
+    vec2.push_back(p4);
+    for(const auto &np: vec2) {
+        cout << *np << endl; 
+    }
+
+    cout << "-------------------------" << endl;
+    cout << "Weak Pointer" << endl;
+    std::shared_ptr<int> p5 {new int {100}};
+    cout << "p5 use count: " << p5.use_count() << endl;
+    std::weak_ptr<int> p6 {p5};
+    cout << "p5 use count: " << p5.use_count() << endl;
+    cout << "p6 use count: " << p6.use_count() << endl;
+    cout << "p6 expired: " << p6.expired() << endl;
+    p5.reset();
+    cout << "p5 use count: " << p5.use_count() << endl;
+    cout << "p6 use count: " << p6.use_count() << endl;
+    cout << "p6 expired: " << p6.expired() << endl;
+    if(std::shared_ptr<int> np = p6.lock()) {
+        cout << "p6 is not expired" << endl;
+    } else {
+        cout << "p6 is expired" << endl;
+    }
+    cout << "-------------------------" << endl;
+    cout << "Custom Deleter" << endl;
+    std::shared_ptr<int> p7 {new int {100}, [](int *p) {
+        cout << "Deleting int..." <<endl;
+        delete p;
+    }};
+    cout << *p7 << endl;
+    cout << "-------------------------" << endl;
+
+    return 0;
+}
